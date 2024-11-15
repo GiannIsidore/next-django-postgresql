@@ -8,6 +8,7 @@ interface AuthContextType {
   authLoading: boolean;
   auth_login: (username: string, password: string) => Promise<void>;
   error: string | null;
+  user: {username:string}
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -20,13 +21,16 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [auth, setAuth] = useState(false);
   const [authLoading, setAuthLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const router = useRouter();
+    const router = useRouter();
+    const [user, setUser] = useState<{ username: string } | null>(null);
 
   const check_auth = async () => {
     setAuthLoading(true);  // Ensure loading state is updated before the check
     try {
-      await getAuth();
-      setAuth(true);
+        const userData = await getAuth();
+
+        setAuth(true);
+        setUser({ username: userData.username })
     } catch {
       setAuth(false);
     } finally {

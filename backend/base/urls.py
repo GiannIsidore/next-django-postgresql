@@ -10,5 +10,5 @@ urlpatterns = [
     path('token/refresh/', CustomTokenRefreshView.as_view(), name='token_refresh'),
     path('register/', register),
     path('authenticated/', authenticated),
-    path('toggle_follow',toggleFollow)
+    path('toggle_follow',toggleFollow),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

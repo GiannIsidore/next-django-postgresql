@@ -1,5 +1,6 @@
 import axios from "axios";
-const BASE_URL = process.env.SERVER_URL
+const BASE_URL = process.env.NEXT_PUBLIC_SERVER_URL;
+
 const api = axios.create({
     baseURL: BASE_URL,
     withCredentials: true,
@@ -29,6 +30,17 @@ api.interceptors.response.use(
         return Promise.reject(error);
     }
 );
+
+export const get_user_profile_details = async (username:any) => {
+    try {
+        const response = await api.get(`/user_data/${username}/`);
+        return response.data;
+    } catch (error) {
+        console.error("Failed to get user profile details:", error);
+        throw error;
+    }
+};
+
 const refresh_token = async () => {
     const response = await api.post('token/refresh');
     // Update the token or store it in the appropriate place if not using cookies

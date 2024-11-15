@@ -14,6 +14,7 @@ from rest_framework_simplejwt.views import(
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def authenticated(request):
+
     return Response('athenticated')
 
 @api_view(['POST'])
