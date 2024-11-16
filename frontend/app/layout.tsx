@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import ClientAuthProvider from "@/lib/ClientAuthProvider";
+import { ThemeProvider } from "@/components/theme-provider";
+
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -29,10 +31,16 @@ export default function RootLayout({
           <body
         cz-shortcut-listen="true"
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+          ><ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
           >
         <ClientAuthProvider>
             {children}
-        </ClientAuthProvider>
+                  </ClientAuthProvider>
+                  </ThemeProvider>
       </body>
     </html>
   );

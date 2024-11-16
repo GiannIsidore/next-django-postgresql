@@ -1,14 +1,15 @@
-import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
-import { AppSidebar } from "@/components/app-sidebar"
+'use client'
+
+
+import Navbar from "@/components/navbar"
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <SidebarProvider>
-      <AppSidebar />
-      <main>
-        <SidebarTrigger />
+    <div className="flex flex-col min-h-screen">
+      <Navbar />
+      <main className="flex-grow pt-16"> {/* Adjust pt-16 based on your navbar height */}
         {children}
       </main>
-    </SidebarProvider>
+    </div>
   )
 }

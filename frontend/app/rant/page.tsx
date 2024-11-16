@@ -1,9 +1,10 @@
-import React from 'react'
 
-const RantPage = () => {
+import React from 'react'
+import RantPage from '@/components/rantPage'
+const Rants = () => {
   return (
-    <div>RantPage</div>
+    <div className='flex'>ey</div>
   )
 }
 
-export default RantPage
+export default Rants
