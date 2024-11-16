@@ -2,7 +2,7 @@
 
 import { get_users_post } from '@/app/api/user/route'
 import React, { useState, useEffect } from 'react'
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Skeleton } from "@/components/ui/skeleton"
 import { AlertCircle } from 'lucide-react'
@@ -11,7 +11,9 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 interface Post {
   id: string
   description: string
-  formatted_date: string
+    formatted_date: string
+likes: any
+    like_count: number
 }
 
 interface PostViewProps {
@@ -59,10 +61,10 @@ export default function PostView({ username,profileImage }: PostViewProps) {
   return (
     <div className="container mx-auto px-4 py-8">
       <header className="mb-8 flex items-center space-x-4">
-        <Avatar className="h-12 w-12">
+        {/* <Avatar className="h-12 w-12">
           <AvatarImage src={`${SERVER_URL}${profileImage}`} alt={username} />
           <AvatarFallback>{username[0].toUpperCase()}</AvatarFallback>
-        </Avatar>
+        </Avatar> */}
         <h1 className="text-2xl font-bold">{username}&apos;s Posts</h1>
       </header>
 
@@ -81,8 +83,8 @@ export default function PostView({ username,profileImage }: PostViewProps) {
         </div>
       ) : (
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {posts.map((post, index) => (
-            <Card key={index} className="overflow-hidden">
+          {posts.map((post) => (
+            <Card key={post.id} className="overflow-hidden">
               <CardHeader>
                 <CardTitle className="line-clamp-1">{post.description}</CardTitle>
               </CardHeader>
@@ -91,7 +93,10 @@ export default function PostView({ username,profileImage }: PostViewProps) {
                 <p className="mt-2 text-sm text-gray-500">
                   Posted on: {new Date(post.formatted_date).toLocaleDateString()}
                 </p>
-              </CardContent>
+                  </CardContent>
+                  <CardFooter>
+               <h1> {post.like_count} likes</h1>
+                  </CardFooter>
             </Card>
           ))}
         </div>

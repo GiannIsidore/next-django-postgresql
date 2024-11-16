@@ -39,7 +39,7 @@ class PostSerializer(serializers.ModelSerializer):
     formatted_date = serializers.SerializerMethodField()
     class Meta:
         model = Post
-        fields = ['username', 'description', 'formatted_date', 'likes', 'like_count']
+        fields = ['id','username', 'description', 'formatted_date', 'likes', 'like_count']
 
     def get_username(self, obj):
         return obj.user.username
