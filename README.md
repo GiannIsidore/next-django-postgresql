@@ -18,7 +18,7 @@ This is an unfinished social media application built with a modern tech stack:
 ### Frontend
 - Framework: Next.js
 - Language: TypeScript
-- Styling: Likely using Tailwind CSS or similar modern styling approach
+- Styling: Tailwind CSS or similar modern styling approach, Shadcn UI
 
 ## Current Status
 The project is in an unfinished state, with initial components and structures in place for a social media platform.
