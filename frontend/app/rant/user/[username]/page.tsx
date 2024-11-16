@@ -7,7 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Users } from "lucide-react"
 import { useEffect, useState } from 'react'
 import { get_user_profile_details, toggleFollow } from '@/app/api/user/route'
-import { SERVER_URL } from '@/app/constants/constanst';
+
 import PostView from '@/components/post_view'
 
 interface User {
@@ -62,7 +62,7 @@ const UserPage = () => {
      }, [username])
 
   return (
-    <div className='grid grid-cols-1 md:grid-cols-2 gap-4 p-4'>
+    <div className='grid grid-cols-2 md:grid-cols-3 gap-4 p-4'>
       <Card className="col-span-1">
         <CardHeader className="flex flex-col items-center space-y-4">
           <Avatar className="w-32 h-32">
@@ -96,8 +96,8 @@ const UserPage = () => {
           <p className="text-center text-sm">{bio}</p>
         </CardContent>
       </Card>
-      <div className="col-span-1">
-        {typeof username === 'string' && <PostView username={username} />}
+      <div className="col-span-2">
+         <PostView username={username as string} profileImage={profileImage} follower_count={followerCount} following_count={followerCount} bio={bio}  />
       </div>
     </div>
   )

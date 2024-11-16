@@ -11,23 +11,30 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 interface Post {
   id: string
   description: string
-  createdAt: string
+  formatted_date: string
 }
 
 interface PostViewProps {
-  username: string
+    username: string
+    profileImage: string;
+    follower_count: number;
+    following_count: number;
+    bio: string;
+
 }
 
-export default function PostView({ username }: PostViewProps) {
+export default function PostView({ username,profileImage }: PostViewProps) {
   const [posts, setPosts] = useState<Post[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
+  const SERVER_URL= process.env.NEXT_PUBLIC_SERVER_URL
+    useEffect(() => {
 
-  useEffect(() => {
     const fetchPosts = async () => {
       try {
         const fetchedPosts = await get_users_post(username)
-        setPosts(fetchedPosts)
+          setPosts(fetchedPosts)
+          console.log(posts)
       } catch (error) {
         console.error('Failed to fetch posts', error)
         setError('Failed to load posts. Please try again later.')
@@ -53,7 +60,7 @@ export default function PostView({ username }: PostViewProps) {
     <div className="container mx-auto px-4 py-8">
       <header className="mb-8 flex items-center space-x-4">
         <Avatar className="h-12 w-12">
-          <AvatarImage src={`https://avatar.vercel.sh/${username}`} alt={username} />
+          <AvatarImage src={`${SERVER_URL}${profileImage}`} alt={username} />
           <AvatarFallback>{username[0].toUpperCase()}</AvatarFallback>
         </Avatar>
         <h1 className="text-2xl font-bold">{username}&apos;s Posts</h1>
@@ -74,15 +81,15 @@ export default function PostView({ username }: PostViewProps) {
         </div>
       ) : (
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {posts.map((post) => (
-            <Card key={post.id} className="overflow-hidden">
+          {posts.map((post, index) => (
+            <Card key={index} className="overflow-hidden">
               <CardHeader>
                 <CardTitle className="line-clamp-1">{post.description}</CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="line-clamp-3">{post.description}</p>
                 <p className="mt-2 text-sm text-gray-500">
-                  Posted on: {new Date(post.createdAt).toLocaleDateString()}
+                  Posted on: {new Date(post.formatted_date).toLocaleDateString()}
                 </p>
               </CardContent>
             </Card>
