@@ -7,6 +7,8 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Skeleton } from "@/components/ui/skeleton"
 import { AlertCircle, Heart } from 'lucide-react'
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
+import { toggleLike } from '../app/api/user/route';
+import { revalidatePath } from 'next/cache'
 
 interface Post {
     id: string
@@ -30,7 +32,13 @@ export default function PostView({ username,profileImage }: PostViewProps) {
   const [posts, setPosts] = useState<Post[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
-  const SERVER_URL= process.env.NEXT_PUBLIC_SERVER_URL
+    const SERVER_URL = process.env.NEXT_PUBLIC_SERVER_URL
+    const [clientLiked, setClientLiked] = useState()
+    const [clientLikedCount, setClientLikedCount] = useState(0)
+    const HandleToggleLike = async (id:any) => {
+        const data = await toggleLike(id);
+
+    }
     useEffect(() => {
 
     const fetchPosts = async () => {
@@ -47,7 +55,7 @@ export default function PostView({ username,profileImage }: PostViewProps) {
     }
 
     fetchPosts()
-  }, [username])
+  }, [HandleToggleLike])
 
   if (error) {
     return (
@@ -98,9 +106,9 @@ export default function PostView({ username,profileImage }: PostViewProps) {
                   <CardFooter>
                     {
                         post.liked ? (
-                            <Heart className="h-6 w-6 text-red-500 fill-current" />
+                            <Heart className="h-6 w-6 text-red-500 fill-current" onClick={()=> HandleToggleLike(post.id)} />
                         ) : (
-                            <Heart className="h-6 w-6 text-gray-500" />
+                            <Heart className="h-6 w-6 text-gray-500" onClick={()=> HandleToggleLike(post.id)}/>
                         )
                     }
                <h1> {post.like_count} likes</h1>
