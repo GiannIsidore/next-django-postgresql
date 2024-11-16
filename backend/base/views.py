@@ -3,7 +3,7 @@ from rest_framework.permissions import IsAuthenticated
 
 from rest_framework.response import Response
 
-from .models import MyUser
+from .models import MyUser, Post
 from .serializers import MyUserProfileSerializer, PostSerializer, UserRegisterSerializer
 
 from rest_framework_simplejwt.views import(
@@ -134,9 +134,40 @@ def toggleFollow(request):
 def get_users_post(request, pk):
     try:
         user = MyUser.objects.get(username=pk)
+        my_user = MyUser.objects.get(username=request.user.username)
     except MyUser.DoesNotExist:
         return Response({'error': 'User Does not Exist'})
     posts = user.posts.all().order_by('-created_at')
 
     serializer = PostSerializer(posts, many=True)
-    return Response(serializer.data)
+    data = []
+    for post in serializer.data:
+        new_post = {}
+        if my_user in post['likes']:
+            new_post= {**post.data, 'liked': True}
+        else:
+            new_post= {**post.data, 'liked': False}
+        data.append(new_post)
+    return Response(data)
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def toggleLike(request):
+    try:
+        try:
+            post = Post.objects.get(id=request.data['id'])
+        except Post.DoesNotExist:
+            return Response({'error': 'Post Does not Exist'})
+
+        try:
+            user = MyUser.objects.get(username=request.user.username)
+        except MyUser.DoesNotExist:
+            return Response({'error': 'User Does not Exist'})
+        if user in post.likes.all():
+            post.likes.remove(user)
+            return Response({'now_liked': False})
+        else:
+            post.likes.add(user)
+            return Response({'now_liked': True})
+    except:
+        return Response({'error': 'error liking post'})
