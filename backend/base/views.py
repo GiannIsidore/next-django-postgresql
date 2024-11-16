@@ -143,10 +143,10 @@ def get_users_post(request, pk):
     data = []
     for post in serializer.data:
         new_post = {}
-        if my_user in post['likes']:
-            new_post= {**post.data, 'liked': True}
+        if my_user.username in post['likes']:
+            new_post= {**post, 'liked': True}
         else:
-            new_post= {**post.data, 'liked': False}
+            new_post= {**post, 'liked': False}
         data.append(new_post)
     return Response(data)
 

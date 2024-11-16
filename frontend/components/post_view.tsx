@@ -5,15 +5,16 @@ import React, { useState, useEffect } from 'react'
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Skeleton } from "@/components/ui/skeleton"
-import { AlertCircle } from 'lucide-react'
+import { AlertCircle, Heart } from 'lucide-react'
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 
 interface Post {
-  id: string
-  description: string
+    id: string
+    description: string
     formatted_date: string
-likes: any
+    likes: any
     like_count: number
+    liked: any
 }
 
 interface PostViewProps {
@@ -95,6 +96,13 @@ export default function PostView({ username,profileImage }: PostViewProps) {
                 </p>
                   </CardContent>
                   <CardFooter>
+                    {
+                        post.liked ? (
+                            <Heart className="h-6 w-6 text-red-500 fill-current" />
+                        ) : (
+                            <Heart className="h-6 w-6 text-gray-500" />
+                        )
+                    }
                <h1> {post.like_count} likes</h1>
                   </CardFooter>
             </Card>
