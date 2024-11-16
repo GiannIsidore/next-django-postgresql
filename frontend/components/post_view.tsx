@@ -9,6 +9,7 @@ import { AlertCircle, Heart } from 'lucide-react'
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { toggleLike } from '../app/api/user/route';
 import { revalidatePath } from 'next/cache'
+import UserAvatar from './userAvatar'
 
 interface Post {
     id: string
@@ -69,11 +70,15 @@ export default function PostView({ username,profileImage }: PostViewProps) {
   return (
     <div className="container mx-auto px-4 py-8">
       <header className="mb-8 flex items-center space-x-4">
-        {/* <Avatar className="h-12 w-12">
-          <AvatarImage src={`${SERVER_URL}${profileImage}`} alt={username} />
-          <AvatarFallback>{username[0].toUpperCase()}</AvatarFallback>
-        </Avatar> */}
-        <h1 className="text-2xl font-bold">{username}&apos;s Posts</h1>
+      <UserAvatar
+        username={username}
+        profileImage={profileImage}
+        SERVER_URL={SERVER_URL || ''}
+        className="rounded-full shadow-lg"
+
+/>
+
+        <h1 className="text-2xl font-bold font-cascadia">{username}&apos;s Posts</h1>
       </header>
 
       {loading ? (
