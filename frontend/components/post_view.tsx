@@ -33,8 +33,7 @@ export default function PostView({ username,profileImage }: PostViewProps) {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
     const SERVER_URL = process.env.NEXT_PUBLIC_SERVER_URL
-    const [clientLiked, setClientLiked] = useState()
-    const [clientLikedCount, setClientLikedCount] = useState(0)
+
     const HandleToggleLike = async (id:any) => {
         const data = await toggleLike(id);
 
