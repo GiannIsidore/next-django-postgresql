@@ -1,0 +1,28 @@
+# Django and Related Backend Dependencies
+Django==4.2.3
+psycopg2-binary==2.9.6
+djangorestframework==3.14.0
+django-cors-headers==4.1.0
+python-dotenv==1.0.0
+
+# Authentication
+django-allauth==0.54.0
+djangorestframework-simplejwt==5.2.2
+
+# Additional Utilities
+Pillow==10.0.0
+markdown==3.4.3
+
+# Development and Debugging
+pytest==7.3.1
+coverage==7.2.7
+
+# API and Serialization
+drf-yasg==1.21.5
+
+# Security
+django-security==0.1.2
+
+# Performance
+gunicorn==20.1.0
+whitenoise==6.5.0
