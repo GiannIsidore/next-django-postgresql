@@ -8,6 +8,7 @@ import { Users } from "lucide-react"
 import { useEffect, useState } from 'react'
 import { get_user_profile_details, toggleFollow } from '@/app/api/user/route'
 import { SERVER_URL } from '@/app/constants/constanst';
+import PostView from '@/components/post_view'
 
 interface User {
     username: string;
@@ -96,7 +97,7 @@ const UserPage = () => {
         </CardContent>
       </Card>
       <div className="col-span-1">
-        {/* Diri ang post sa user hehe */}
+        {typeof username === 'string' && <PostView username={username} />}
       </div>
     </div>
   )
