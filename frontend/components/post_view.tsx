@@ -3,12 +3,12 @@
 import { get_users_post } from '@/app/api/user/route'
 import React, { useState, useEffect } from 'react'
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+
 import { Skeleton } from "@/components/ui/skeleton"
 import { AlertCircle, Heart } from 'lucide-react'
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { toggleLike } from '../app/api/user/route';
-import { revalidatePath } from 'next/cache'
+
 import UserAvatar from './userAvatar'
 
 interface Post {
@@ -37,25 +37,26 @@ export default function PostView({ username,profileImage }: PostViewProps) {
 
     const HandleToggleLike = async (id:any) => {
         const data = await toggleLike(id);
-
+      fetchPosts();
     }
+  const fetchPosts = async () => {
+    try {
+      const fetchedPosts = await get_users_post(username)
+      setPosts(fetchedPosts)
+      console.log(posts)
+    } catch (error) {
+      console.error('Failed to fetch posts', error)
+      setError('Failed to load posts. Please try again later.')
+    } finally {
+      setLoading(false)
+    }
+  }
     useEffect(() => {
 
-    const fetchPosts = async () => {
-      try {
-        const fetchedPosts = await get_users_post(username)
-          setPosts(fetchedPosts)
-          console.log(posts)
-      } catch (error) {
-        console.error('Failed to fetch posts', error)
-        setError('Failed to load posts. Please try again later.')
-      } finally {
-        setLoading(false)
-      }
-    }
+    
 
     fetchPosts()
-  }, [HandleToggleLike])
+  }, [])
 
   if (error) {
     return (
